@@ -14,6 +14,11 @@ BOOKS_DATABASE = [
 
 class Book:
     def __init__(self, id_, name, pages):
+        """
+              Создание и подготовка к работе объекта "Книга"
+              :id_: Идентификатор книги
+              :name: Название книги
+              :pages: Количество страниц книги"""
         self.id = id_
         self.name = name
         self.pages = pages
@@ -27,22 +32,43 @@ class Book:
 
 class Library:
     def __init__(self, books=None):
+        """
+              Создание и подготовка к работе объекта "Библиотека"
+              :books: Список книг
+"""
+
         self.books = books  # атрибут - список книг
 
     def get_next_book_id(self):
+        """
+                Функция, возвращающая идентификатор для добавления новой книги в библиотеку
+                Если книг в библиотеке нет, то вернуть 1.
+                Если книги есть, то вернуть идентификатор последней книги увеличенный на 1"""
         if self.books is None:
             return 1
         if self.books is not None:
-            count = len(self.books)
-            return self.books[count - 1].id + 1
+            # count = len(self.books)
+            return self.books[-1].id + 1
 
     def get_index_by_book_id(self, book_id):
-        for book in self.books:
-            for index, value in enumerate(self.books):
-                if book.id == book_id:
-                    return book_id, book.id, index
-                else:
-                    raise ValueError("Книги с запрашиваемым id не существует")
+        """
+                Функция, возвращающая индекс книги в списке, который хранится
+                в атрибуте экземпляра класса.
+                Если книга существует, то вернуть индекс из списка.
+                :raise ValueError: Если книги нет, то вызвать ошибку ValueError
+                с сообщением: "Книги с запрашиваемым id не существует"""
+        # for book in self.books:
+        #     for index, value in enumerate(self.books):
+        #         if book.id == book_id:
+        #             return book_id, book.id, index
+        #         else:
+        #             raise ValueError("Книги с запрашиваемым id не существует")
+
+        for index, book in enumerate(self.books):
+            if book.id == book_id:
+                return index
+
+        raise ValueError("Книги с запрашиваемым id не существует")
 
 
 if __name__ == '__main__':
@@ -55,4 +81,4 @@ if __name__ == '__main__':
     library_with_books = Library(books=list_books)  # инициализируем библиотеку с книгами
     print(library_with_books.get_next_book_id())  # проверяем следующий id для непустой библиотеки
 
-    print(library_with_books.get_index_by_book_id(2))  # проверяем индекс книги с id = 1
+    print(library_with_books.get_index_by_book_id(1))  # проверяем индекс книги с id = 1
