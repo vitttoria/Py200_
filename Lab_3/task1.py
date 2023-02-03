@@ -13,10 +13,18 @@ class Book:
         self._author = author
 
     def __str__(self):
-        return f"Книга {self._name}. Автор {self._author}"
+        return f"Книга {self._name}. Автор {self._author}."
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(name={self._name!r}, author={self._author!r})"
+        return f"{self.__class__.__name__}(name={self._name!r}, author={self._author!r})."
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def author(self):
+        return self._author
 
 
 class PaperBook(Book):
@@ -30,11 +38,13 @@ class PaperBook(Book):
              # >>> book1 = PaperBook("I am legend", 'John C.', 300)  # инициализация экземпляра класса
              """
         super().__init__(name, author)
-        # self.name = name
-        # self.author = author
-        self.get_pages(pages)  # атрибут подкласса "Бумажная книга"
 
-    def get_pages(self, pages: int):
+    @property
+    def pages(self):
+        return self.pages
+
+    @pages.setter
+    def pages(self, pages: int):
         """
                 Функция которая проверяет является ли количество страниц числом
                 :raise TypeError: Если значение не является числом, то вызывается ошибка
@@ -46,10 +56,14 @@ class PaperBook(Book):
             raise TypeError("Количество страниц должно быть целым")
         if pages < 0:
             raise ValueError("Количество страниц должно быть положительным")
+        self.pages = pages
 
-    # def __str__(self):
-    #     return f"Книга {self._name}. Автор {self._author}"
-    #     # super().__str__()
+    def __str__(self):
+        return f"Книга {self._name}. Автор {self._author}. Количество страниц {self.pages}."
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self._name!r}, author={self._author!r}), " \
+               f"pages={self.pages!r}"
 
 
 class AudioBook(Book):
@@ -65,9 +79,10 @@ class AudioBook(Book):
         super().__init__(name, author)
         # self.name = name
         # self.author = author
-        self.get_duration(duration)
+        self.duration = None
+        self.set_duration(duration)
 
-    def get_duration(self, duration: float):
+    def set_duration(self, duration: float):
         """
                 Функция которая проверяет является ли длительность числом с плав.запятой
                 :raise TypeError: Если значение не является числом c плавающей запятой,
@@ -77,34 +92,24 @@ class AudioBook(Book):
                 """
         if not isinstance(duration, float):
             raise TypeError("Длительность книги - число с плавающей запятой")
+        self.duration = duration
 
+    def __str__(self):
+        return f"Книга {self._name}. Автор {self._author}. Длительность {self.duration}."
 
-def __str__():
-    super().__str__()
-    # return f"Книга {self._name}. Автор {self._author}"
-
-
-def __repr__():
-    super().__repr__()
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name={self._name!r}, author={self._author!r}), " \
+               f"duration={self.duration!r}"
 
 
 if __name__ == "__main__":
-    book12 = Book("Python", "Sam Bridges")
-    audio_book = AudioBook("Hello", "Mary K.", 3.7)
-    paper_book = PaperBook("Mary", "Jake K.", 300)
-
-    print(audio_book.__str__())
-    print(paper_book.__str__())
-
-    print(audio_book.__repr__())
-    print(paper_book.__repr__())
-
-    # print(book12._Book__name)
-    # print(book12._Book__author)
-    print(book12._name)
-    print(book12._author)
-
-    # print(dir(AudioBook))
+    # book1 = Book("Python", "Sam Bridges")
+    paper_book = PaperBook("Python", "Sam Bridges", 300)
+    print(paper_book)
+    # print(book1._Book__name)
+    # # print(book1._Book__author)
+    # print(book1._name)
+    # print(book1._author)
 
     # import doctest
     # doctest.testmod()
