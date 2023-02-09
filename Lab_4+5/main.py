@@ -2,6 +2,7 @@ from abc import abstractmethod
 
 
 class Car:
+    """ Базовый абстрактный класс машины. """
 
     @abstractmethod
     def check_condition_for_sale(self):
@@ -13,6 +14,13 @@ class Car:
 
 
 class CarForSale(Car):
+    """
+        Создание подкласса "Car": и подготовка к работе объекта "Машина на продажу"
+        :model: Модель машины
+        :mileage: Пробег машины
+        :condition: Состояние машины
+             """
+
     def __init__(self, model: str, mileage: int, condition: str):
         self._model = model
         self.mileage = mileage
@@ -23,21 +31,40 @@ class CarForSale(Car):
         return self._model
 
     def check_condition_for_sale(self):
-        if self.condition == "Хорошее" or "Очень хорошее" or "Отличное":
-            print(f'Сообщаем, что мы заинтересованы в вашей машине {self.model}')
-        else:
-            print(f'К сожалению мы не заинтересованы в вашей машине {self.model}')
+        """
+          Функция которая проверяет состояние машины, для выкупа ее у владельца для дальнейшей продажи
+          :condition: Состояние машины
+               """
+        if self.condition == "Хорошее" or "Очень хорошее" or "Отличное":  # проверка состояния машины
+            print(f'После проверки состояния машины, сообщаем, что мы заинтересованы в вашей машине {self.model}')
+        elif self.condition == "Удовлетворительное":
+            print(f'После проверки состояния машины, сообщаем, что к сожалению мы не заинтересованы в вашей машине '
+                  f'{self.model}')
 
     def check_mileage_for_sale(self):
+        """
+           Функция которая проверяет пробег машины, для выкупа ее у владельца для дальнейшей продажи
+           :mileage: Пробег машины
+           :raise TypeError: Если значение пробега не является числом или целым числом
+              """
         if self.mileage < 100000:
-            print(f'Мы готовы выкупить вашу машину {self.model}')
+            print(f'После проверки пробега машины, сообщаем, что мы готовы выкупить вашу машину {self.model}, '
+                  f'при условии, что остальные параметры нас устроят')
         elif not isinstance(self.mileage, int):
-            print("Вы ввели не число или не целое число")
+            raise TypeError("Вы ввели не число или не целое число")
         else:
-            print(f'К сожалению мы не заинтересованы в вашей машине {self.model}')
+            print(f'После проверки пробега машины, сообщаем, что к сожалению мы не заинтересованы в '
+                  f'вашей машине {self.model}')
 
 
 class PassengerCar(CarForSale):
+    """
+        Создание подкласса "CarForSale": и подготовка к работе объекта "Легковая машина"
+        :model: Модель машины
+        :mileage: Пробег машины
+        :condition: Состояние машины
+        :capacity: Вместимость машины
+             """
     def __init__(self, model: str, mileage: int, condition: str, capacity: int):
         super().__init__(model, mileage, condition)
         self._capacity = capacity
@@ -53,25 +80,36 @@ class PassengerCar(CarForSale):
             else:
                 print("Пробег не может быть меньше нуля")
         else:
-            print("Пробег измеряется в целых числах")
+            raise TypeError("Пробег измеряется в целых числах")
 
     def get_mileage(self):
         return self.mileage
 
     def check_condition_for_sale(self):
+        """
+          Функция которая проверяет состояние машины, для выкупа ее у владельца для дальнейшей продажи
+          :condition: Состояние машины
+               """
         if self.condition == "Хорошее" or "Очень хорошее" or "Отличное":
-            print(f'Сообщаем, что мы заинтересованы в вашей машине {self.model}, при условии, что другие параметры '
-                  f'нас устроят')
-        else:
-            print("К сожалению мы не заинтересованы в вашей машине")
+            print(f'После проверки состояния машины, сообщаем, что мы заинтересованы в '
+                  f'вашей машине {self.model}, при условии, что другие параметры нас устроят')
+        elif self.condition == "Удовлетворительное":
+            print("После проверки состояния машины, сообщаем, что к сожалению мы не заинтересованы в вашей машине")
 
     def check_mileage_for_sale(self):
+        """
+           Функция которая проверяет пробег машины, для выкупа ее у владельца для дальнейшей продажи
+           :mileage: Пробег машины
+           :raise TypeError: Если значение пробега не является числом или целым числом
+              """
         if self.mileage < 100000:
-            print(f'Мы готовы выкупить вашу машину {self.model}, при условии, что другие параметры нас устроят')
+            print(f'После проверки пробега машины, сообщаем, что мы готовы выкупить вашу машину {self.model}, '
+                  f'при условии, что другие параметры нас устроят')
         elif not isinstance(self.mileage, int):
-            print("Вы ввели не число или не целое число")
+            raise TypeError("Вы ввели не число или не целое число")
         else:
-            print(f"К сожалению мы не заинтересованы в вашей машине {self.model}")
+            print(f"После проверки пробега машины, сообщаем, что к сожалению мы не заинтересованы "
+                  f"в вашей машине {self.model}")
 
     @property
     def car_capacity(self):
@@ -89,6 +127,13 @@ class PassengerCar(CarForSale):
 
 
 class TruckCar(CarForSale):
+    """
+        Создание подкласса "CarForSale": и подготовка к работе объекта "Грузовая машина"
+        :model: Модель машины
+        :mileage: Пробег машины
+        :condition: Состояние машины
+        :tonnage: Грузоподъемность машины
+             """
     def __init__(self, model: str, mileage: int, condition: str, tonnage: int):
         super().__init__(model, mileage, condition)
         self._tonnage = tonnage
@@ -98,7 +143,7 @@ class TruckCar(CarForSale):
             if mileage > 0:
                 self.mileage = mileage
             else:
-                print("Пробег не может быть меньше нуля")
+                raise TypeError("Пробег не может быть меньше нуля")
         else:
             print("Пробег измеряется в целых числах")
 
@@ -106,20 +151,30 @@ class TruckCar(CarForSale):
         return self.mileage
 
     def check_condition_for_sale(self):
+        """
+          Функция которая проверяет состояние машины, для выкупа ее у владельца для дальнейшей продажи
+          :condition: Состояние машины
+               """
         if self.condition == "Хорошее" or "Очень хорошее" or "Отличное":
-            print(
-                f'Сообщаем, что мы заинтересованы в вашей машине {self.model}, при условии, что другие параметры нас '
-                f'устроят')
-        else:
-            print(f'К сожалению мы не заинтересованы в вашей машине {self.model}')
+            print(f'После проверки состояния машины, сообщаем, что мы заинтересованы в вашей машине {self.model}, '
+                  f'при условии, что другие параметры нас устроят')
+        elif self.condition == "Удовлетворительное":
+            print(f'После проверки состояния машины, сообщаем, что к сожалению мы не заинтересованы '
+                  f'в вашей машине {self.model}')
 
     def check_mileage_for_sale(self):
+        """
+           Функция которая проверяет пробег машины, для выкупа ее у владельца для дальнейшей продажи
+           :mileage: Пробег машины
+           :raise TypeError: Если значение пробега не является числом или целым числом
+              """
         if self.mileage < 100000:
-            print(f'Мы готовы выкупить вашу машину {self.model}')
+            print(f'После проверки пробега машины, сообщаем, что мы готовы выкупить вашу машину {self.model}')
         elif not isinstance(self.mileage, int):
-            print("Вы ввели не число или не целое число")
+            raise TypeError("Вы ввели не число или не целое число")
         else:
-            print(f'К сожалению мы не заинтересованы в вашей машине {self.model}')
+            print(f'После проверки пробега машины, сообщаем, что к сожалению мы не заинтересованы '
+                  f'в вашей машине {self.model}')
 
     @staticmethod
     def idealcar(self):
@@ -144,8 +199,8 @@ class TruckCar(CarForSale):
 #         self.cars.append(car)
 #         print(f'Машина {self.cars} добавлена в список на продажу')
 
-    # def check_car_for_sale(self, mileage: int):
-    #     if
+# def check_car_for_sale(self, mileage: int):
+#     if
 
 if __name__ == "__main__":
     # cars_for_sale = GetCarsForSale()
@@ -153,6 +208,7 @@ if __name__ == "__main__":
     truck_car = TruckCar("MAN", 120000, "Хорошее", 3000)
 
     pass_car.get_car_model()
+
     pass_car.check_mileage_for_sale()
     pass_car.check_condition_for_sale()
     truck_car.check_mileage_for_sale()
