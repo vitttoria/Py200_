@@ -215,4 +215,4 @@ if __name__ == "__main__":
     truck_car.check_condition_for_sale()
 
     # cars_for_sale.cars_for_sale(pass_car)
-    # pass_car.idealcar()
+    pass_car.idealcar()
